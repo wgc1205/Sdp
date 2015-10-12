@@ -1,5 +1,11 @@
 #!/usr/bin/env python
-#coding:utf-8
+#-*- coding -*-
+__author__ = 'saintic'
+__date__ = '2015-10-12'
+__doc__ = 'Email Module'
+__version = 'Sdp2.0, SPC1.0'
+
+
 from email import encoders
 from email.header import Header
 from email.mime.text import MIMEText
