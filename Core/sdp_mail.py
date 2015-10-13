@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#-*- coding -*-
+#-*- coding=utf8 -*-
 __author__ = 'saintic'
 __date__ = '2015-10-12'
 __doc__ = 'Email Module'
