@@ -2,10 +2,8 @@
 #-*- coding=utf8 -*-
 __author__ = 'saintic'
 __date__ = '2015-10-12'
-__doc__ = 'Email Module'
-__version = 'sdp1.1'
-
-'''
+__version__ = 'sdp1.1'
+__doc__ = '''
 If you don't have a mail server, try local mail service, this requires that your local mail service is turned on.
 The following is a part of the change.
 
