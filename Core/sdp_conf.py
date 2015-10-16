@@ -5,12 +5,14 @@ __date__ = '2015-10-13'
 __doc__ = 'read config, refuse write'
 __version__ = 'sdp1.1'
 
-def read_conf(items):
-  '''Read configuration information.'''
-  import os,configobj
-  iniconf=configobj.ConfigObj(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))[0], 'sdp.conf'))
+def read_conf(f,i):
+  if not isinstance(f, (str)):
+        raise TypeError('Bad operand type, ask a file.')
+  if not isinstance(i, (str)):
+        raise TypeError('bad operand type, ask string.')
+  from configobj import ConfigObj
   try:
-    return iniconf[items]
+    return ConfigObj(f)[i]
   except:
     print 'Get configuration information failure.'
     return 1
