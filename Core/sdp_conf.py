@@ -7,9 +7,9 @@ __version__ = 'sdp1.1'
 
 def read_conf(f,i):
   if not isinstance(f, (str)):
-        raise TypeError('Bad operand type, ask a file.')
+    raise TypeError('Bad operand type, ask a file.')
   if not isinstance(i, (str)):
-        raise TypeError('bad operand type, ask string.')
+    raise TypeError('bad operand type, ask string.')
   from configobj import ConfigObj
   try:
     return ConfigObj(f)[i]
