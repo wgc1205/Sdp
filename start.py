@@ -5,9 +5,10 @@ __date__ = '2015-10-13'
 __doc__ = 'Entry file, all the start.'
 __version__ = 'sdp1.1'
 
-import sys,os
+import sys,os,re
 from Core.sdp_conf import read_conf
-from Core.sdp_func import genpasswd
+from Core.sdp_funs import genpasswd
+from subprocess import call
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_CONF = os.path.join(BASE_DIR,'sdp.conf')
 APPS = ("mongodb", "mysql", "redis", "memcache")
@@ -36,20 +37,35 @@ REDIS_PASSWORD = REDIS_CONF['password']
 DOCKER_IMG_PRE = DOCKER_CONF['image_prefix']
 DOCKER_REGISTRY = DOCKER_CONF['DockerRegistry']
 
-#get parameters
-user_name = sys.argv[1]
-user_passwd = genpasswd()
-user_service = sys.argv[2]
-user_email = sys.argv[3]
-user_code = ''
-userinfo=(user_name, user_passwd, user_service, user_email)
+def main():
+  global user_name, user_passwd, user_service, user_email
 
-def main(*U):
-  if not isinstance(U, (tuple))
-    raise TypeError('Bad operand type, ask a tuple.')
+  if len(sys.argv) == 5:
+    user_name = sys.argv[1]
+    user_passwd = genpasswd()
+    user_time = sys.argv[2]
+    user_service = sys.argv[3]
+    user_email = sys.argv[4]
 
+    for i in (user_name, user_passwd, user_service, user_email):
+      if not isinstance(i, (str)): print 'Bad Type, ask string.';sys.exit(3)
+
+    if not isinstance(user_time, (int)) or user_time > 0: print 'Bad Type, ask number.';sys.exit(3)
+
+    if re.match(r'([0-9a-zA-Z\_*\.*\-*]+)@([a-zA-Z0-9\-*\_*\.*]+)\.([a-zA-Z]+$)', user_email) == None:
+      print "Mail format error.";sys.exit(3)
+
+  else:
+    print "\033[0;31;40m" + sys.argv[0] + "Usage:user service email \033[0m"
+    sys.exit(1)
+
+  if user_service in WEBS:
+    call(['python ' + os.path.join(BASE_DIR, 'Web.py')], shell=True)
+  elif user_service in APPS:
+    call(['python ' + os.path.join(BASE_DIR, 'App.py')], shell=True)
+  else:
+    print "Unsupported service type."
+    sys.exit(2)
 
 if __name__ == "__main__":
-  if len(sys.argv) != 4:
-    print "Usage:user service email"
-
+  main()

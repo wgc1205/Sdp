@@ -2,7 +2,9 @@
 #coding:utf8
 
 def genpasswd(L=15):
-  if not isinstance(L, (int))
+  if not isinstance(L, (int)):
+    raise TypeError('Bad operand type, ask Digital.')
+  from random import Random
   stri = ''
   chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'
   length = len(chars) - 1
