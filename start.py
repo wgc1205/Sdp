@@ -5,15 +5,19 @@ __date__ = '2015-10-13'
 __doc__ = 'Entry file, all the start.'
 __version__ = 'sdp1.1'
 
-import sys,os,re
-from Core.sdp_conf import read_conf
-from Core.sdp_funs import genpasswd
-from subprocess import call
+try:
+  import sys,os,re
+  from Core.sdp_conf import read_conf
+  from Core.sdp_funs import genpasswd
+  from subprocess import call
+except ImportError as Errmsg:
+  print __file__,"import module failed, because %s" % Errmsg
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_CONF = os.path.join(BASE_DIR,'sdp.conf')
 APPS = ("mongodb", "mysql", "redis", "memcache", "tair")
 WEBS = ("nginx", "tengine", "httpd", "lighttpd", "tomcat", "resin")
-PORTS = []
+PORTS = [8000,]
 
 #get variables from sdp.conf, format is dict.
 GLOBAL_CONF = read_conf(BASE_CONF, 'globals')
