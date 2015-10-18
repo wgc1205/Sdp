@@ -11,8 +11,9 @@ from Core.sdp_funs import genpasswd
 from subprocess import call
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_CONF = os.path.join(BASE_DIR,'sdp.conf')
-APPS = ("mongodb", "mysql", "redis", "memcache")
+APPS = ("mongodb", "mysql", "redis", "memcache", "tair")
 WEBS = ("nginx", "tengine", "httpd", "lighttpd", "tomcat", "resin")
+PORTS = []
 
 #get variables from sdp.conf, format is dict.
 GLOBAL_CONF = read_conf(BASE_CONF, 'globals')
@@ -34,29 +35,25 @@ REDIS_DB = REDIS_CONF['db']
 REDIS_PASSWORD = REDIS_CONF['password']
 
 #set docker variables
-DOCKER_IMG_PRE = DOCKER_CONF['image_prefix']
+DOCKER_PUSH = DOCKER_CONF['Push']
+DOCKER_IMG_PRE = DOCKER_CONF['Img_prefix']
 DOCKER_REGISTRY = DOCKER_CONF['DockerRegistry']
 
 def main():
   global user_name, user_passwd, user_service, user_email
 
   if len(sys.argv) == 5:
-    user_name = sys.argv[1]
-    user_passwd = genpasswd()
-    user_time = sys.argv[2]
-    user_service = sys.argv[3]
-    user_email = sys.argv[4]
-
+    user_name = str(sys.argv[1])
+    user_passwd = str(genpasswd())
+    user_time = int(sys.argv[2])
+    user_service = str(sys.argv[3])
+    user_email = str(sys.argv[4])
     for i in (user_name, user_passwd, user_service, user_email):
-      if not isinstance(i, (str)): print 'Bad Type, ask string.';sys.exit(3)
-
-    if not isinstance(user_time, (int)) or user_time > 0: print 'Bad Type, ask number.';sys.exit(3)
-
-    if re.match(r'([0-9a-zA-Z\_*\.*\-*]+)@([a-zA-Z0-9\-*\_*\.*]+)\.([a-zA-Z]+$)', user_email) == None:
-      print "Mail format error.";sys.exit(3)
-
+      if not isinstance(i, (str)): raise TypeError('Bad Type, ask string.');sys.exit(3)
+    if not isinstance(user_time, (int)) or user_time <= 0: raise TypeError('Bad Type, ask number.');sys.exit(3)
+    if re.match(r'([0-9a-zA-Z\_*\.*\-*]+)@([a-zA-Z0-9\-*\_*\.*]+)\.([a-zA-Z]+$)', user_email) == None: print "Mail format error.";sys.exit(3)
   else:
-    print "\033[0;31;40m" + sys.argv[0] + "Usage:user service email \033[0m"
+    print "\033[0;31;40mUsage:user time service email\033[0m"
     sys.exit(1)
 
   if user_service in WEBS:
