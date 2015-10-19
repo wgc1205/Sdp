@@ -17,15 +17,16 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_CONF = os.path.join(BASE_DIR,'sdp.conf')
 APPS = ("mongodb", "mysql", "redis", "memcache", "tair")
 WEBS = ("nginx", "tengine", "httpd", "lighttpd", "tomcat", "resin")
-PORTS = [8000,]
 
 #get variables from sdp.conf, format is dict.
 GLOBAL_CONF = read_conf(BASE_CONF, 'globals')
 REDIS_CONF = read_conf(BASE_CONF, 'redis')
+MYSQL_CONF = read_conf(BASE_CONF, 'mysql')
 DOCKER_CONF = read_conf(BASE_CONF, 'docker')
 
 #set global variables
 LANG = GLOBAL_CONF['LANG']
+PORT = GLOBAL_CONF['StartPort']
 SDP_HOME = GLOBAL_CONF['SDP_HOME']
 SDP_DATA_HOME = GLOBAL_CONF['SDP_DATA_HOME']
 SDP_USER_DATA_HOME = os.path.join(SDP_DATA_HOME, str(GLOBAL_CONF['SDP_USER_DATA_HOME']))
@@ -38,6 +39,12 @@ REDIS_PORT = REDIS_CONF['port']
 REDIS_DB = REDIS_CONF['db']
 REDIS_PASSWORD = REDIS_CONF['password']
 
+#set mysql variables
+MYSQL_HOST = MYSQL_CONF['host']
+MYSQL_PORT = MYSQL_CONF['port']
+MYSQL_DB = MYSQL_CONF['db']
+MYSQL_PASSWORD = MYSQL_CONF['password']
+
 #set docker variables
 DOCKER_PUSH = DOCKER_CONF['Push']
 DOCKER_IMG_PRE = DOCKER_CONF['Img_prefix']
@@ -45,7 +52,8 @@ DOCKER_REGISTRY = DOCKER_CONF['DockerRegistry']
 
 def main():
   global user_name, user_passwd, user_service, user_email
-
+  reload(sys)
+  sys.setdefaultencoding(LANG)
   if len(sys.argv) == 5:
     user_name = str(sys.argv[1])
     user_passwd = str(genpasswd())
