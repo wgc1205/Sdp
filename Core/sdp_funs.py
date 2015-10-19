@@ -1,5 +1,9 @@
 #!/usr/bin/env python
-#coding:utf8
+#-*- coding:utf8 -*-
+__author__ = 'saintic'
+__date__ = '2015-10-12'
+__version__ = 'sdp1.1'
+__doc__ = 'some functions'
 
 def genpasswd(L=15):
   if not isinstance(L, (int)):
