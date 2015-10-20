@@ -10,16 +10,16 @@ try:
 except ImportError as errmsg:
   print __file__, 'import docker module failed, because %s' % errmsg
 
-class Sdocker():
+class Docker():
   '''Operation docker, maybe json format'''
   def __init__(self):
-    connect = docker.Client(base_url='unix://var/run/docker.sock',version='auto',timeout=30)
+    connect = docker.Client(base_url='unix://var/run/docker.sock')
 
   def build(self):
     pass
 
   def container_create(self, **kw):
-    self.connect.create_container(image=img,stdin_open=True,tty=True,command="",volumes=['/data'],ports=[80,22],name=imgname)
+    self.connect.create_container(image=img,stdin_open=True, tty=True, name=imgname)
 
   def container_run(self):
     pass
