@@ -11,11 +11,18 @@ except ImportError as errmsg:
   print __file__, 'import docker module failed, because %s' % errmsg
 
 class Sdocker():
-  '''Operation docker, json format'''
-  def __init__(self, **kw):
+  '''Operation docker, maybe json format'''
+  def __init__(self):
+    connect = docker.Client(base_url='unix://var/run/docker.sock',version='auto',timeout=30)
+
+  def build(self):
     pass
 
-  def docker_create(self, image):
-    cid = docker.Client(base_url='unix://var/run/docker.sock',version='auto',timeout=30)
-    cid.create_container(image="yorko/webserver:v1",stdin_open=True,tty=True,command="",volumes=['/data'],ports=[80,22],name="webserver11")
+  def container_create(self, **kw):
+    self.connect.create_container(image=img,stdin_open=True,tty=True,command="",volumes=['/data'],ports=[80,22],name=imgname)
 
+  def container_run(self):
+    pass
+
+  def push(self):
+    pass
