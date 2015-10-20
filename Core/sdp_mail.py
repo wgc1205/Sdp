@@ -13,6 +13,11 @@ smtp_server='127.0.0.1'
 Comment on this line:
 #password='xxxx'
 #server.login(from_addr, password)
+
+If you need't html, please modify:
+msg = MIMEText(content, 'html', 'utf-8')
+change to(for plain):
+msg = MIMEText(content, 'utf-8')
 '''
 
 from email import encoders
