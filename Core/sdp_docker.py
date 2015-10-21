@@ -20,6 +20,10 @@ class Docker():
 
   def container_create(self, **kw):
     self.connect.create_container(image=img,stdin_open=True, tty=True, name=imgname)
+    self.connect.create_container(image='staugur/base', name='all', stdin_open=True, cpu_shares=2, tty=True)
+
+  def start(self):
+    pass
 
   def container_run(self):
     pass
